@@ -1,9 +1,12 @@
 version: 0.1
 plaintext:
-  JAVA_HOME: "/opt/jdk1.8.0_192"
+  JAVA_HOME: "/usr/lib/jvm/java-8-openjdk-amd64"
 phases:
   install:
+
     run-as: root
+    runtime-versions:
+      java: openjdk8
     commands:
       - echo This is a installation
       - wget https://services.gradle.org/distributions/gradle-4.6-all.zip
