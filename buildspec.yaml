@@ -9,8 +9,8 @@ phases:
       java: openjdk8
     commands:
       - echo This is a installation
-      - wget https://services.gradle.org/distributions/gradle-4.6-all.zip
-      - unzip -d /opt/gradle gradle-4.6-all.zip
+      - wget https://services.gradle.org/distributions/gradle-6.0.1-all.zip
+      - unzip -d /opt/gradle gradle-6.0.1-all.zip
   pre_build:
     commands:
       - echo This is a pre build
@@ -20,9 +20,9 @@ phases:
       - echo Current directory is `pwd`
       - whereis gradle
       - which gradle
-      - /opt/gradle/gradle-4.6/bin/gradle -version
-      - /opt/gradle/gradle-4.6/bin/gradle clean
-      - /opt/gradle/gradle-4.6/bin/gradle build
+      - /opt/gradle/gradle-6.0.1/bin/gradle -version
+      - /opt/gradle/gradle-6.0.1/bin/gradle clean
+      - /opt/gradle/gradle-6.0.1/bin/gradle build
   post_build:
     commands:
       - echo Build must be completed
