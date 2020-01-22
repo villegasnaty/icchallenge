@@ -4,17 +4,13 @@ import com.intercorp.challenge.model.Cliente;
 import com.intercorp.challenge.model.KpiClienteResponse;
 import com.intercorp.challenge.service.ChallengeServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -25,7 +21,7 @@ public class ClienteController {
     private ChallengeServiceImpl challengeService;
 
     @RequestMapping(value = "/creacliente", method = RequestMethod.POST)
-    public ResponseEntity<Cliente> creaCliente(@Valid @RequestBody Cliente cliente) throws ParseException {
+    public ResponseEntity<Cliente> creaCliente(@Valid @RequestBody Cliente cliente) {
         cliente = challengeService.saveCliente(cliente);
         return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
     }
@@ -37,14 +33,15 @@ public class ClienteController {
     }
 
     @RequestMapping(value = "/listclientes", method = RequestMethod.GET)
-    //public ResponseEntity<List<Cliente>> getClienteList() {
-     //   List<Cliente> clientes = challengeService.getClienteList();
-      //  return new ResponseEntity<List<Cliente>>(clientes, HttpStatus.OK);
-    //}
-
-    public ResponseEntity<Cliente> getClienteList() {
-        Cliente clientes = challengeService.getClienteList();
-        return new ResponseEntity<Cliente>(clientes, HttpStatus.OK);
+    public ResponseEntity<List<Cliente>> getClienteList() {
+        List<Cliente> clientes = challengeService.getClienteList();
+        return new ResponseEntity<List<Cliente>>(clientes, HttpStatus.OK);
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleNotFoundException(MethodArgumentNotValidException exception) {
+        return new ResponseEntity<String>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 
 }

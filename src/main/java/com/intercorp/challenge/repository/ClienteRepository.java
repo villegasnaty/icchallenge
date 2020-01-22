@@ -17,5 +17,4 @@ public interface ClienteRepository extends JpaRepository<ClienteDto, Long> {
     Float getDesviacionEstandar();
 
 
-
 }

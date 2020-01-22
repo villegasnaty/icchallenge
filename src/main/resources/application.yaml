@@ -22,7 +22,7 @@ logging:
         web: DEBUG
 
 application:
-  esperanza: 85
+  esperanza: 75
 
 
 

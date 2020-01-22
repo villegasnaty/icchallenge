@@ -1,6 +1,5 @@
 package com.intercorp.challenge.service;
 
-import com.intercorp.challenge.config.YAMLConfig;
 import com.intercorp.challenge.dto.ClienteDto;
 import com.intercorp.challenge.mapper.ClienteMapper;
 import com.intercorp.challenge.model.Cliente;
@@ -22,13 +21,11 @@ public class ChallengeServiceImpl {
     private ClienteRepository clienteRepository;
 
     @Autowired
-    private YAMLConfig config;
+    private ClienteMapper clienteMapper;
 
     public Cliente saveCliente(Cliente cliente) {
-        ClienteDto clienteDto = ClienteMapper.INSTANCE.clienteToClienteDto(cliente);
+        ClienteDto clienteDto = clienteMapper.clienteToClienteDto(cliente);
         cliente.setEdad(calculateAge(cliente));
-        cliente.setFechaProbableMuerte(cliente.getFechaDeNacimiento().plusYears(10));
-
         clienteRepository.save(clienteDto);
         return cliente;
     }
@@ -38,13 +35,11 @@ public class ChallengeServiceImpl {
         kpi.setPromedioEdad(String.format("%.2f", clienteRepository.getEdadAverage()));
         kpi.setDesviacion(String.format("%.2f", clienteRepository.getDesviacionEstandar()));
         return kpi;
-
     }
 
-    public Cliente getClienteList() {
-        List<ClienteDto> clientes = clienteRepository.findAll();
-        Cliente cliente = ClienteMapper.INSTANCE.clienteDtoToCliente(clientes.get(1), config.getEsperanza());
-        return cliente;
+    public List<Cliente> getClienteList() {
+        List<Cliente> clientes = clienteMapper.map(clienteRepository.findAll());
+        return clientes;
     }
 
     private Integer calculateAge(Cliente cliente) {

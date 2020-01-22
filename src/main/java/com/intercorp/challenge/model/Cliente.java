@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -22,7 +21,8 @@ public class Cliente {
     @NotNull(message = "fecha de nacimiento no puede estar vacío")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "GMT-3")
     private LocalDate fechaDeNacimiento;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "GMT-3")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private LocalDate fechaProbableMuerte;
+
 }
